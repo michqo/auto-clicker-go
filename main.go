@@ -15,6 +15,9 @@ func main() {
 
 var clicking bool = false
 
+const MIN int = 40
+const MAX int = 70
+
 func addHooks() {
 	hook.Register(hook.KeyDown, []string{"'"}, func(e hook.Event) {
 		hook.End()
@@ -29,8 +32,6 @@ func addHooks() {
 }
 
 func addClicker() {
-	const MIN int = 45
-	const MAX int = 85
 
 	for {
 		if clicking {

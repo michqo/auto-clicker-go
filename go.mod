@@ -2,14 +2,16 @@ module autoclicker
 
 go 1.17
 
-require github.com/go-vgo/robotgo v0.100.10
+require (
+	github.com/go-vgo/robotgo v0.100.10
+	github.com/robotn/gohook v0.31.3
+)
 
 require (
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/lxn/win v0.0.0-20210218163916-a377121e959e // indirect
 	github.com/otiai10/gosseract v2.2.1+incompatible // indirect
-	github.com/robotn/gohook v0.31.3 // indirect
 	github.com/robotn/xgb v0.0.0-20190912153532-2cb92d044934 // indirect
 	github.com/robotn/xgbutil v0.0.0-20190912154524-c861d6f87770 // indirect
 	github.com/shirou/gopsutil v3.21.10+incompatible // indirect
