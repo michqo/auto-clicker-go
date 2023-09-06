@@ -17,6 +17,7 @@ var clicking bool = false
 
 const MIN int = 40
 const MAX int = 70
+const IDLE int = 80
 
 func addHooks() {
 	hook.Register(hook.KeyDown, []string{"'"}, func(e hook.Event) {
@@ -45,6 +46,6 @@ func addClicker() {
 			}
 		}
 
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(time.Duration(IDLE) * time.Millisecond)
 	}
 }
