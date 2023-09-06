@@ -8,44 +8,48 @@ import (
 	hook "github.com/robotn/gohook"
 )
 
-func main() {
-	go addClicker()
-	addHooks()
-}
-
-var clicking bool = false
+var clicking bool
 
 const MIN int = 40
 const MAX int = 70
 const IDLE int = 80
 
-func addHooks() {
+func main() {
+	clickCh := make(chan bool)
+	go addClicker(clickCh)
+	addHooks(clickCh)
+}
+
+func addHooks(clickCh chan<- bool) {
 	hook.Register(hook.KeyDown, []string{"'"}, func(e hook.Event) {
 		hook.End()
 	})
 
 	hook.Register(hook.KeyDown, []string{"c"}, func(e hook.Event) {
-		clicking = !clicking
+		clickCh <- true
 	})
 
 	s := hook.Start()
 	<-hook.Process(s)
 }
 
-func addClicker() {
-
+func addClicker(clickCh <-chan bool) {
 	for {
+		<-clickCh
+		clicking = !clicking
 		if clicking {
-			for {
-				if !clicking {
-					break
-				}
-				robotgo.Click()
-				delay := rand.Intn(MAX-MIN) + MIN
-				time.Sleep(time.Duration(delay) * time.Millisecond)
-			}
+			go clickMouse()
 		}
+	}
+}
 
-		time.Sleep(time.Duration(IDLE) * time.Millisecond)
+func clickMouse() {
+	for {
+		if !clicking {
+			break
+		}
+		robotgo.Click()
+		delay := rand.Intn(MAX-MIN) + MIN
+		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
 }
