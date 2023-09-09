@@ -9,6 +9,7 @@ import (
 )
 
 var clicking bool
+var clickerRunning bool
 
 const MIN int = 40
 const MAX int = 70
@@ -37,7 +38,8 @@ func addClicker(clickCh <-chan bool) {
 	for {
 		<-clickCh
 		clicking = !clicking
-		if clicking {
+		if clicking && !clickerRunning {
+			clickerRunning = true
 			go clickMouse()
 		}
 	}
@@ -46,6 +48,7 @@ func addClicker(clickCh <-chan bool) {
 func clickMouse() {
 	for {
 		if !clicking {
+			clickerRunning = false
 			break
 		}
 		robotgo.Click()
