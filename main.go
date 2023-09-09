@@ -13,7 +13,6 @@ var clickerRunning bool
 
 const MIN int = 40
 const MAX int = 70
-const IDLE int = 80
 
 func main() {
 	clickCh := make(chan bool)
@@ -38,21 +37,22 @@ func addClicker(clickCh <-chan bool) {
 	for {
 		<-clickCh
 		clicking = !clicking
-		if clicking && !clickerRunning {
-			clickerRunning = true
+		if !clickerRunning && clicking {
 			go clickMouse()
+			clickerRunning = true
 		}
 	}
 }
 
 func clickMouse() {
+	var delay int
 	for {
 		if !clicking {
 			clickerRunning = false
-			break
+			return
 		}
 		robotgo.Click()
-		delay := rand.Intn(MAX-MIN) + MIN
+		delay = rand.Intn(MAX-MIN) + MIN
 		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
 }
