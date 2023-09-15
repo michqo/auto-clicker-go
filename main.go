@@ -9,14 +9,13 @@ import (
 )
 
 var clicking bool
-var clickerRunning bool
 
-const MIN int = 40
-const MAX int = 70
+const MIN int = 35
+const MAX int = 75
 
 func main() {
 	clickCh := make(chan bool)
-	go addClicker(clickCh)
+	go watch(clickCh)
 	addHooks(clickCh)
 }
 
@@ -33,13 +32,12 @@ func addHooks(clickCh chan<- bool) {
 	<-hook.Process(s)
 }
 
-func addClicker(clickCh <-chan bool) {
+func watch(clickCh <-chan bool) {
 	for {
 		<-clickCh
 		clicking = !clicking
-		if !clickerRunning && clicking {
+		if clicking {
 			go clickMouse()
-			clickerRunning = true
 		}
 	}
 }
@@ -48,7 +46,6 @@ func clickMouse() {
 	var delay int
 	for {
 		if !clicking {
-			clickerRunning = false
 			return
 		}
 		robotgo.Click()
