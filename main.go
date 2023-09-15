@@ -1,17 +1,10 @@
 package main
 
 import (
-	"math/rand"
-	"time"
-
-	"github.com/go-vgo/robotgo"
 	hook "github.com/robotn/gohook"
 )
 
-var clicking bool
-
-const MIN int = 35
-const MAX int = 75
+var leftClicker Clicker = Clicker{delay: Delay{MIN: 35, MAX: 75}, running: false}
 
 func main() {
 	clickCh := make(chan bool)
@@ -35,21 +28,9 @@ func addHooks(clickCh chan<- bool) {
 func watch(clickCh <-chan bool) {
 	for {
 		<-clickCh
-		clicking = !clicking
-		if clicking {
-			go clickMouse()
+		leftClicker.running = !leftClicker.running
+		if leftClicker.running {
+			go leftClicker.activate()
 		}
-	}
-}
-
-func clickMouse() {
-	var delay int
-	for {
-		if !clicking {
-			return
-		}
-		robotgo.Click()
-		delay = rand.Intn(MAX-MIN) + MIN
-		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
 }
