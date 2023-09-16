@@ -15,16 +15,18 @@ type Delay struct {
 type Clicker struct {
 	delay   Delay
 	running bool
+	button  string
 }
 
 func (c *Clicker) activate() {
 	var delay int
+	var diff int = c.delay.MAX - c.delay.MIN
 	for {
 		if !c.running {
 			return
 		}
-		robotgo.Click()
-		delay = rand.Intn(c.delay.MAX-c.delay.MIN) + c.delay.MIN
+		robotgo.Click(c.button)
+		delay = rand.Intn(diff) + c.delay.MIN
 		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
 }
