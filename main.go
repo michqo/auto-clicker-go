@@ -9,8 +9,8 @@ const (
 	RIGHT = 1
 )
 
-var LEFT_DELAY Delay = Delay{MIN: 35, MAX: 75}
-var RIGHT_DELAY Delay = Delay{MIN: 15, MAX: 30}
+var LEFT_DELAY Delay = Delay{value: 40, threshold: 15}
+var RIGHT_DELAY Delay = Delay{value: 25, threshold: 15}
 
 var leftClicker Clicker = Clicker{delay: LEFT_DELAY, running: false, button: "left"}
 var rightClicker Clicker = Clicker{delay: RIGHT_DELAY, running: false, button: "right"}

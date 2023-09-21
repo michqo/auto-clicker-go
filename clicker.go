@@ -8,8 +8,8 @@ import (
 )
 
 type Delay struct {
-	MIN int
-	MAX int
+	value     int
+	threshold int
 }
 
 type Clicker struct {
@@ -20,13 +20,15 @@ type Clicker struct {
 
 func (c *Clicker) activate() {
 	var delay int
-	var diff int = c.delay.MAX - c.delay.MIN
+	lower := c.delay.value - c.delay.threshold
+	higher := c.delay.value + c.delay.threshold
+	diff := higher - lower
 	for {
 		if !c.running {
 			return
 		}
 		robotgo.Click(c.button)
-		delay = rand.Intn(diff) + c.delay.MIN
+		delay = rand.Intn(diff) + lower
 		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
 }
