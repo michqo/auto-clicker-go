@@ -8,8 +8,14 @@ import (
 )
 
 type Config struct {
-	LeftDelay  Delay `yaml:"left"`
-	RightDelay Delay `yaml:"right"`
+	Deactivate string      `yaml:"deactivate"`
+	LeftClick  ConfigClick `yaml:"left"`
+	RightClick ConfigClick `yaml:"right"`
+}
+
+type ConfigClick struct {
+	Deactivate string `yaml:"deactivate"`
+	Delay      Delay  `yaml:"delay"`
 }
 
 type Delay struct {

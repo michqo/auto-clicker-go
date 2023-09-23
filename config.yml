@@ -1,7 +1,13 @@
+deactivate: "'"
+
 left:
-  value: 40
-  threshold: 15
+  deactivate: "c"
+  delay:
+    value: 45
+    threshold: 15
 
 right:
-  value: 22
-  threshold: 10
+  deactivate: "2"
+  delay:
+    value: 21
+    threshold: 10
