@@ -1,0 +1,7 @@
+left:
+  value: 40
+  threshold: 15
+
+right:
+  value: 22
+  threshold: 10

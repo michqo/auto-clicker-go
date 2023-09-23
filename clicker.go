@@ -7,9 +7,14 @@ import (
 	"github.com/go-vgo/robotgo"
 )
 
+type Config struct {
+	LeftDelay  Delay `yaml:"left"`
+	RightDelay Delay `yaml:"right"`
+}
+
 type Delay struct {
-	value     int
-	threshold int
+	Value     int `yaml:"value"`
+	Threshold int `yaml:"threshold"`
 }
 
 type Clicker struct {
@@ -20,8 +25,8 @@ type Clicker struct {
 
 func (c *Clicker) activate() {
 	var delay int
-	lower := c.delay.value - c.delay.threshold
-	higher := c.delay.value + c.delay.threshold
+	lower := c.delay.Value - c.delay.Threshold
+	higher := c.delay.Value + c.delay.Threshold
 	diff := higher - lower
 	for {
 		if !c.running {

@@ -8,8 +8,11 @@ require (
 )
 
 require (
+	github.com/BurntSushi/toml v1.3.2 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
+	github.com/ilyakaznacheev/cleanenv v1.5.0 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/lxn/win v0.0.0-20210218163916-a377121e959e // indirect
 	github.com/otiai10/gosseract v2.2.1+incompatible // indirect
 	github.com/robotn/xgb v0.0.0-20190912153532-2cb92d044934 // indirect
@@ -23,4 +26,6 @@ require (
 	github.com/vcaesar/tt v0.20.0 // indirect
 	golang.org/x/image v0.0.0-20211028202545-6944b10bf410 // indirect
 	golang.org/x/sys v0.0.0-20211123173158-ef496fb156ab // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 )

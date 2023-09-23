@@ -1,6 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
+	"github.com/ilyakaznacheev/cleanenv"
 	hook "github.com/robotn/gohook"
 )
 
@@ -9,13 +13,19 @@ const (
 	RIGHT = 1
 )
 
-var LEFT_DELAY Delay = Delay{value: 40, threshold: 15}
-var RIGHT_DELAY Delay = Delay{value: 25, threshold: 15}
-
-var leftClicker Clicker = Clicker{delay: LEFT_DELAY, running: false, button: "left"}
-var rightClicker Clicker = Clicker{delay: RIGHT_DELAY, running: false, button: "right"}
+var leftClicker Clicker
+var rightClicker Clicker
 
 func main() {
+	var cfg Config
+	err := cleanenv.ReadConfig("config.yml", &cfg)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(2)
+	}
+	leftClicker = Clicker{delay: cfg.LeftDelay, running: false, button: "left"}
+	rightClicker = Clicker{delay: cfg.RightDelay, running: false, button: "right"}
+
 	clickCh := make(chan int)
 	go watch(clickCh)
 	addHooks(clickCh)
