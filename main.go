@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/go-vgo/robotgo"
 	"github.com/ilyakaznacheev/cleanenv"
 	hook "github.com/robotn/gohook"
 )
@@ -19,9 +20,12 @@ var rightClicker Clicker
 var leftDeactivate []string
 var rightDeactivate []string
 var deactivate []string
+var processTitle string
+var processPid int32
 
 func main() {
 	loadConfig()
+	setProcessPid()
 	clickCh := make(chan int)
 	go watch(clickCh)
 	addHooks(clickCh)
@@ -39,6 +43,19 @@ func loadConfig() {
 	leftDeactivate = []string{cfg.LeftClick.Deactivate}
 	rightDeactivate = []string{cfg.RightClick.Deactivate}
 	deactivate = []string{cfg.Deactivate}
+	processTitle = cfg.ProcessTitle
+}
+
+func setProcessPid() {
+	fpid, err := robotgo.FindIds(processTitle)
+	if err == nil {
+		if len(fpid) > 0 {
+			processPid = fpid[0]
+			return
+		}
+	}
+	fmt.Println("Process not found")
+	os.Exit(1)
 }
 
 func addHooks(clickCh chan<- int) {
@@ -47,11 +64,15 @@ func addHooks(clickCh chan<- int) {
 	})
 
 	hook.Register(hook.KeyDown, leftDeactivate, func(e hook.Event) {
-		clickCh <- LEFT
+		if robotgo.GetPID() == processPid {
+			clickCh <- LEFT
+		}
 	})
 
 	hook.Register(hook.KeyDown, rightDeactivate, func(e hook.Event) {
-		clickCh <- RIGHT
+		if robotgo.GetPID() == processPid {
+			clickCh <- RIGHT
+		}
 	})
 
 	s := hook.Start()

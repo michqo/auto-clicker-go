@@ -8,9 +8,10 @@ import (
 )
 
 type Config struct {
-	Deactivate string      `yaml:"deactivate"`
-	LeftClick  ConfigClick `yaml:"left"`
-	RightClick ConfigClick `yaml:"right"`
+	ProcessTitle string      `yaml:"process-title"`
+	Deactivate   string      `yaml:"deactivate"`
+	LeftClick    ConfigClick `yaml:"left"`
+	RightClick   ConfigClick `yaml:"right"`
 }
 
 type ConfigClick struct {
